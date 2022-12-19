@@ -1,0 +1,14 @@
+.startingPlayerContainer {
+  text-align: center;
+}
+
+.startingPlayerContainer select {
+  font-family: "Press Start 2P", cursive;
+  color: aqua;
+
+  border: none;
+  background-color: rgb(35, 35, 35);
+  font-size: 32px;
+  text-align: center;
+  height: 64px;
+}

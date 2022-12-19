@@ -1,0 +1,22 @@
+.boardSettingsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 30px;
+}
+
+.boardSettingsContainer input {
+  font-family: "Press Start 2P", cursive;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  background-color: rgb(35, 35, 35);
+  color: aliceblue;
+  font-size: 32px;
+  text-align: center;
+  width: 64px;
+  height: 40px;
+}
