@@ -2,6 +2,8 @@
 
 This is a simple Tic Tac Toe game written in Typescript.
 
+Demo: https://danlavro.github.io/tic-tac-toe/
+
 ## How to play
 
 1. Clone the repository
