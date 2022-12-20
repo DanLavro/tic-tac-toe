@@ -5,6 +5,7 @@ import { BoardSettings } from "./components/BoardSettings/BoardSettings";
 import { GameModeSetting } from "./components/GameModeSettings/GameModeSetting";
 import StartingPlayerSetting from "./components/StartingPlayer/StartingPlayerSetting";
 import checkGameOver from "./utils/checkGameOver";
+import minimax from "./utils/miniMax";
 
 const TicTacToe: React.FC = () => {
   const [board, setBoard] = useState([
@@ -22,6 +23,7 @@ const TicTacToe: React.FC = () => {
   const [aiMakingMove, setAiMakingMove] = useState(false);
 
   const [startingPlayer, setStartingPlayer] = useState("Player");
+  const [moveCounter, setMoveCounter] = useState(0);
 
   const boardRender = (row: number, col: number) => {
     const newBoard = board.map((row) => [...row]);
@@ -38,21 +40,15 @@ const TicTacToe: React.FC = () => {
 
   const computerMove = () => {
     setAiMakingMove(true);
-    const emptyCells = [];
 
-    for (let i = 0; i < board.length; i++) {
-      for (let j = 0; j < board[i].length; j++) {
-        if (board[i][j] === "") {
-          emptyCells.push([i, j]);
-        }
-      }
-    }
-
-    const randomIndex = Math.floor(Math.random() * emptyCells.length);
-    const [row, col] = emptyCells[randomIndex];
+    const boardCopy = board.map((row) => [...row]);
+    const bestMove = minimax(boardCopy, currentPlayer, winLength);
+    const { row, col } = bestMove;
 
     boardRender(row, col);
     setAiMakingMove(false);
+
+    setMoveCounter((prev) => prev + 1);
   };
 
   const handleClick = (row: number, col: number) => {
@@ -61,6 +57,7 @@ const TicTacToe: React.FC = () => {
     }
 
     boardRender(row, col);
+    setMoveCounter((prev) => prev + 1);
   };
 
   const handleReset = () => {
@@ -72,6 +69,7 @@ const TicTacToe: React.FC = () => {
     setCurrentPlayer("X");
     setGameOver(false);
     setWinner(null);
+    setMoveCounter(0);
   };
 
   const handleFieldSizeChange = (
@@ -134,7 +132,9 @@ const TicTacToe: React.FC = () => {
 
   return (
     <div className="App">
-      {gameOver && <div>{winner ? `Winner: ${winner}` : "Draw"}</div>}
+      <h1>Tic Tac Toe</h1>
+      {gameOver && <div>{`Winner: ${winner}`}</div>}
+      {moveCounter === 9 && !gameOver && <div>Draw</div>}
       <Board board={board} onClick={handleClick} />
       <BoardSettings
         fieldSize={fieldSize}
